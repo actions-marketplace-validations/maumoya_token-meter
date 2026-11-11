@@ -42,11 +42,12 @@ python3 skills/token-meter/scripts/token_meter.py --unused
 | Field | Meaning |
 |---|---|
 | `ctx` / `%` | context of the latest call, and how full the auto-compact window is |
-| `turns left` | turns until compaction at the recent growth rate |
+| `turns left` | turns until compaction at the median growth of the last 8 turns (one odd turn does not swing it) |
 | `base` | context of the first call: your fixed cost (instructions, MCP tool lists, skills) |
 | `cache` | share of input read from the prompt cache |
 | `COLD` | idle past the cache life (5 min, or 1 h for the long cache): the next call re-writes it all |
-| `spent` / `sub` | all tokens of the session, and the part used by subagents |
+| `spent` / `sub` | all tokens of the session, and the part used by subagents (`N runs`) |
+| `compacted Nx` | how many times the session was compacted |
 | tools, MCP, skills | calls per tool, MCP server and skill |
 | never called | connected MCP servers and personal skills no session used in 7 days (`--unused`) |
 
@@ -65,6 +66,8 @@ Cost is shown only when you pass a price file. The meter never guesses prices.
   that is not a plain identifier prints as `other`, and any output string over 80 characters stops the run.
 - **No dependencies.** Python standard library only. The tests check that the source imports nothing that
   talks to the network or runs programs, and never opens a file for writing.
+- **Nothing installed, nothing sent.** No hooks, no background job, no telemetry, no analytics, no settings
+  edits and no stored history: it runs only when you call it, and its output stays in your terminal.
 
 See [SECURITY.md](SECURITY.md).
 

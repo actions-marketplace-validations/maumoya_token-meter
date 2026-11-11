@@ -24,14 +24,14 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 CLAUDE_HOME = Path.home() / ".claude"
 CLAUDE_JSON = Path.home() / ".claude.json"
 DEFAULT_WINDOW = 200_000      # context window when settings name no auto-compact window
 LIVE_MINUTES = 15             # a session is live when its log changed this recently
 TOP = 8                       # names shown per list
-FORECAST_TURNS = 5            # turns the "turns left" forecast looks back over
+FORECAST_TURNS = 8            # turns the "turns left" forecast looks back over
 MIN_FORECAST_TURNS = 3
 CACHE_LIFE_LONG_S = 3600      # 1-hour prompt cache
 CACHE_LIFE_SHORT_S = 300      # 5-minute prompt cache
@@ -156,12 +156,16 @@ class Session:
         self.baseline = 0
         self.turns = 0
         self.turn_ctx: list = []
+        self.compactions = 0
+        self.subagent_runs = 0
         self.models: Counter = Counter()
         self.tools: Counter = Counter()
         self.mcp: Counter = Counter()
         self.skills: Counter = Counter()
 
     def read(self, path: Path, lane: str, prices: dict) -> None:
+        if lane == "subagents":
+            self.subagent_runs += 1
         for row in _rows(path):
             kind = row.get("type")
             if kind == "user" and lane == "main":
@@ -171,6 +175,7 @@ class Session:
 
     def _user(self, row: dict) -> None:
         if row.get("isCompactSummary"):
+            self.compactions += 1
             self.turn_ctx = []
         elif _is_user_turn(row):
             self.turns += 1
@@ -225,8 +230,18 @@ class Session:
         recent = [c for c in self.turn_ctx if c][-FORECAST_TURNS:]
         if len(recent) < MIN_FORECAST_TURNS:
             return None
-        growth = (recent[-1] - recent[0]) / (len(recent) - 1)
+        growth = median_slope(recent)
         return None if growth <= 0 else max(0, int((window - self.ctx_now) // growth))
+
+
+def median_slope(values: list) -> float:
+    """Growth per turn: the median of the turn-to-turn growth, so one odd turn (a big file read,
+    a cleared tool result) does not swing the forecast the way an average would."""
+    steps = sorted(b - a for a, b in zip(values, values[1:]))
+    if not steps:
+        return 0.0
+    mid = len(steps) // 2
+    return steps[mid] if len(steps) % 2 else (steps[mid - 1] + steps[mid]) / 2
 
 
 def _top(counter: Counter) -> list:
@@ -260,6 +275,7 @@ def session_body(key: tuple, files: list, *, now: datetime, window: int, prices:
         "id": clean_name(key[1][:8]), "last_at": _stamp(last_at), "idle_s": idle,
         "cold": idle > (CACHE_LIFE_LONG_S if state.long_cache else CACHE_LIFE_SHORT_S),
         "ctx_now": state.ctx_now, "fill": round(state.ctx_now / window, 3), "turns": state.turns,
+        "compactions": state.compactions, "subagent_runs": state.subagent_runs,
         "turns_left": state.turns_left(window), "baseline": state.baseline,
         "cache_share": round(state.cache_read / state.ctx_total, 3) if state.ctx_total else 0.0,
         "calls": state.calls, "tokens": state.tokens,
@@ -354,7 +370,8 @@ def render(body: dict) -> str:
         lines.append(f"  {s['id']}  ctx {short(s['ctx_now']):>5} {s['fill']:>4.0%} · turns left {left:>3} · "
                      f"cache {s['cache_share']:.0%}{' COLD' if s['cold'] else ''} · base {short(s['baseline'])} · "
                      f"spent {short(s['tokens']['main'] + s['tokens']['subagents'])} "
-                     f"(sub {short(s['tokens']['subagents'])}) · {cost} · {model}")
+                     f"(sub {short(s['tokens']['subagents'])}, {s['subagent_runs']} runs) · "
+                     f"compacted {s['compactions']}x · {cost} · {model}")
         uses = [f"{label} " + ", ".join(f"{u['name']} {u['count']}" for u in s[key][:4])
                 for label, key in (("tools", "tools"), ("MCP", "mcp"), ("skills", "skills")) if s[key]]
         if uses:

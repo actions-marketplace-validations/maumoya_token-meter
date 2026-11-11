@@ -103,6 +103,19 @@ class LiveSessions(Fixture):
         s = self.build()["sessions"][0]
         self.assertEqual(s["tokens"], {"main": 5100, "subagents": 3000})
         self.assertEqual(s["ctx_now"], 5000)              # subagent context never counts as the main one
+        self.assertEqual(s["subagent_runs"], 1)
+
+    def test_one_odd_turn_does_not_swing_the_forecast(self):
+        rows = []
+        for i, ctx in enumerate((50_000, 60_000, 130_000, 140_000, 150_000)):   # one 70k jump (a big file read)
+            rows += [user(), reply(f"m{i}", ctx)]
+        self.write("p/s1.jsonl", rows)
+        s = self.build()["sessions"][0]
+        self.assertEqual(s["turns_left"], 5)             # 50k left / 10k a turn, not 50k / 25k
+
+    def test_median_slope(self):
+        self.assertEqual(tm.median_slope([10, 20, 30]), 10)
+        self.assertEqual(tm.median_slope([5]), 0.0)
 
     def test_old_sessions_are_not_live(self):
         self.write("p/old.jsonl", [user(), reply("a", 5000)], age_s=3600)
@@ -121,6 +134,7 @@ class LiveSessions(Fixture):
         s = self.build()["sessions"][0]
         self.assertEqual(s["ctx_now"], 30_000)
         self.assertIsNone(s["turns_left"])
+        self.assertEqual(s["compactions"], 1)
 
     def test_cost_only_with_prices(self):
         self.write("p/s1.jsonl", [user(), reply("a", 2010, out=1000)])

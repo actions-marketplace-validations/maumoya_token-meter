@@ -19,11 +19,13 @@ Script: `scripts/token_meter.py` (Python 3.10+ standard library only).
    (`examples/prices.example.json` shows the shape); never invent prices.
 2. **Explain** each live session in plain words, highest fill first:
    - `ctx` and `%`: context of the latest call against the auto-compact window.
-   - `turns left`: turns until compaction at the recent growth rate (`-` = not enough turns or not growing).
+   - `turns left`: turns until compaction at the median growth of the last 8 turns (`-` = not enough turns
+     or not growing).
    - `base`: the context of the first call. A high baseline means heavy instructions, MCP tool lists or skills.
    - `cache`: share of input read from the prompt cache. `COLD` = idle past the cache life, so the next call
      re-writes the whole context at the full price.
-   - `spent` and `sub`: all tokens, and the part used by subagents.
+   - `spent` and `sub`: all tokens, and the part used by subagents (`N runs` = subagent runs).
+   - `compacted Nx`: how many times the session was compacted.
 3. **Advise**, only from what the numbers show:
    - fill over 80% or few turns left: compact at the next milestone, or start a fresh session for a new topic.
    - COLD and large: start fresh rather than resume, if the earlier context is no longer needed.
