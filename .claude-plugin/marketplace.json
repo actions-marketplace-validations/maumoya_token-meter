@@ -1,0 +1,29 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "claude-token-meter",
+  "description": "Live token meter for Claude Code: context size, auto-compact fill, turns left, cache share, cold-cache warning, main vs subagent tokens, and the MCP servers and skills you never call, per running session. Read only, offline, numbers and names only.",
+  "owner": {
+    "name": "Mauricio Alonso Moya Tapia"
+  },
+  "plugins": [
+    {
+      "name": "claude-token-meter",
+      "description": "Live token meter for Claude Code: context size, auto-compact fill, turns left, cache share, cold-cache warning, main vs subagent tokens, and the MCP servers and skills you never call, per running session. Read only, offline, numbers and names only.",
+      "source": "./",
+      "category": "development",
+      "keywords": [
+        "claude-code",
+        "claude-skill",
+        "agent-skills",
+        "tokens",
+        "token-usage",
+        "context-window",
+        "prompt-cache",
+        "cost",
+        "mcp",
+        "observability",
+        "privacy"
+      ]
+    }
+  ]
+}

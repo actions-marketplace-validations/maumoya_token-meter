@@ -1,0 +1,4 @@
+{
+  "_note": "USD per million tokens. Copy the current list prices for the models you use from your provider's pricing page. cache_read and cache_write are optional (defaults: 0.1x and 1.25x input).",
+  "your-model-id": {"input": 1.0, "output": 5.0, "cache_read": 0.1, "cache_write": 1.25}
+}
