@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""claude-token-meter: what each running Claude Code session is spending, right now.
+"""token-meter: what each running Claude Code session is spending, right now.
 
 Reads the Claude Code session logs (~/.claude/projects/**/*.jsonl) READ ONLY and prints, per live session:
 context now and how full the auto-compact window is, turns left before compaction, the starting baseline,

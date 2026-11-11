@@ -4,7 +4,7 @@
 
 If you find a way to make the meter print prompt text, a file path or a secret, or to make it write,
 delete or send anything, report it privately through GitHub's
-[private vulnerability reporting](https://github.com/maumoya/claude-token-meter/security/advisories/new).
+[private vulnerability reporting](https://github.com/maumoya/token-meter/security/advisories/new).
 You will get an answer within 7 days.
 
 ## What the tool does and does not do

@@ -9,7 +9,7 @@ from contextlib import redirect_stderr, redirect_stdout
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-SCRIPT = Path(__file__).resolve().parents[1] / "skills" / "claude-token-meter" / "scripts" / "token_meter.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "skills" / "token-meter" / "scripts" / "token_meter.py"
 sys.path.insert(0, str(SCRIPT.parent))
 import token_meter as tm  # noqa: E402
 

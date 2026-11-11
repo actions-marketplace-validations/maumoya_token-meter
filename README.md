@@ -1,6 +1,6 @@
-# claude-token-meter
+# token-meter
 
-[![Tests](https://github.com/maumoya/claude-token-meter/actions/workflows/test.yml/badge.svg)](https://github.com/maumoya/claude-token-meter/actions/workflows/test.yml)
+[![Tests](https://github.com/maumoya/token-meter/actions/workflows/test.yml/badge.svg)](https://github.com/maumoya/token-meter/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **Live token meter for Claude Code.** See what every running session is spending right now: context size,
@@ -25,16 +25,16 @@ visible, per session, so you know when to compact, when to start fresh and what 
 As a Claude Code plugin:
 
 ```
-/plugin marketplace add maumoya/claude-token-meter
-/plugin install claude-token-meter@claude-token-meter
+/plugin marketplace add maumoya/token-meter
+/plugin install token-meter@token-meter
 ```
 
-Then ask Claude "how full is my context?" or run `/claude-token-meter`.
+Then ask Claude "how full is my context?" or run `/token-meter`.
 
 Or run the script directly (Python 3.10+, nothing to install):
 
 ```bash
-python3 skills/claude-token-meter/scripts/token_meter.py --unused
+python3 skills/token-meter/scripts/token_meter.py --unused
 ```
 
 ## What it shows

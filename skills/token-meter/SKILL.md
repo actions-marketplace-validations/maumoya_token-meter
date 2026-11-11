@@ -1,9 +1,9 @@
 ---
-name: claude-token-meter
-description: Live token meter for Claude Code. Shows what every running session is spending right now - context size, how full the auto-compact window is, turns left before compaction, baseline, cache share, a cold mark when the prompt cache expired, main versus subagent tokens, optional cost, models, and calls per tool, MCP server and skill - plus the MCP servers and skills you never call. Read only, offline, prints numbers and names only, never prompt text. Use when the user says "/claude-token-meter", "token meter", "how many tokens am I using", "how full is my context", "when will it compact", "why is this session so expensive", "token usage per session", "which MCP servers do I never use", "is my cache cold", or wants to cut Claude Code token cost.
+name: token-meter
+description: Live token meter for Claude Code. Shows what every running session is spending right now - context size, how full the auto-compact window is, turns left before compaction, baseline, cache share, a cold mark when the prompt cache expired, main versus subagent tokens, optional cost, models, and calls per tool, MCP server and skill - plus the MCP servers and skills you never call. Read only, offline, prints numbers and names only, never prompt text. Use when the user says "/token-meter", "token meter", "how many tokens am I using", "how full is my context", "when will it compact", "why is this session so expensive", "token usage per session", "which MCP servers do I never use", "is my cache cold", or wants to cut Claude Code token cost.
 ---
 
-# Claude Token Meter
+# Token Meter
 
 A session gets expensive because every call re-reads the whole context. This skill reads the Claude Code
 session logs on this machine, read only, and shows where the tokens go, so the user can act: compact, clear,
