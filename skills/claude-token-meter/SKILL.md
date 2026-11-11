@@ -9,7 +9,7 @@ A session gets expensive because every call re-reads the whole context. This ski
 session logs on this machine, read only, and shows where the tokens go, so the user can act: compact, clear,
 start a fresh session, or drop MCP servers and skills they never call.
 
-Script: `scripts/token_meter.py` (Python 3.9+ standard library only).
+Script: `scripts/token_meter.py` (Python 3.10+ standard library only).
 
 ## Steps
 

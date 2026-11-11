@@ -9,7 +9,7 @@ the connected MCP servers and personal skills that no session called in the last
 
 Privacy: no prompt, reply, file path or file text ever reaches the output. Only numbers, model ids, short
 session ids and tool, MCP server and skill names; a name that is not a plain identifier prints as "other".
-No network, no writes, no hooks, no background process. Python 3.9+ standard library only.
+No network, no writes, no hooks, no background process. Python 3.10+ standard library only.
 
     python3 token_meter.py [--json] [--minutes 15] [--window N] [--prices FILE] [--unused] [--root DIR]
 """

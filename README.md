@@ -31,7 +31,7 @@ As a Claude Code plugin:
 
 Then ask Claude "how full is my context?" or run `/claude-token-meter`.
 
-Or run the script directly (Python 3.9+, nothing to install):
+Or run the script directly (Python 3.10+, nothing to install):
 
 ```bash
 python3 skills/claude-token-meter/scripts/token_meter.py --unused
