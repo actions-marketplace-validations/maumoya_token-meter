@@ -1,6 +1,6 @@
 ---
 name: token-meter
-description: Live token meter for Claude Code. Shows what every running session is spending right now - context size, window fill, turns left before compaction, cache share, a cold-cache mark, subagent tokens, and calls per tool, MCP server and skill - plus the MCP servers and skills you never call, what each CLAUDE.md, rule, MEMORY.md and skill header costs per call (--costs), a status line meter (--statusline), and with --advise proposals for what to cut and improve (compact, start fresh, trim, split models, local model, new skill, turn off). Read only, offline, prints numbers and names only, never prompt text. Use when the user says "/token-meter", "token meter", "how many tokens am I using", "how full is my context", "when will it compact", "why is this session so expensive", "which MCP servers do I never use", "is my cache cold", "what should I cut", "how do I spend fewer tokens", "what does my CLAUDE.md cost", "token status line", "advise me on tokens", or wants to cut Claude Code token cost.
+description: Token meter for Claude Code (directory edition). Shows what each session is spending - context size, window fill, cache share and subagent tokens - read from local transcripts. Read only, offline, prints numbers and names only, never prompt text. Use when the user says "/token-meter", "token meter", "how many tokens am I using", "how full is my context", "is my cache cold", "why is this session so expensive", or wants to cut Claude Code token cost.
 license: MIT
 ---
 
