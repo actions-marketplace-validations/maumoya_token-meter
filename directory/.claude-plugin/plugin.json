@@ -1,0 +1,25 @@
+{
+  "name": "token-meter",
+  "version": "0.5.0",
+  "description": "Token meter for Claude Code (directory edition): context size, window fill, cache share and subagent tokens per session, read from local transcripts. Read only, offline, numbers and names only.",
+  "author": {
+    "name": "Mauricio Alonso Moya Tapia",
+    "url": "https://github.com/maumoya"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/maumoya/token-meter",
+  "repository": "https://github.com/maumoya/token-meter",
+  "keywords": [
+    "claude-code",
+    "claude-skill",
+    "agent-skills",
+    "tokens",
+    "token-usage",
+    "context-window",
+    "prompt-cache",
+    "cost",
+    "mcp",
+    "observability",
+    "privacy"
+  ]
+}
